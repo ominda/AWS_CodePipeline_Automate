@@ -37,11 +37,11 @@ data "aws_iam_policy_document" "d_codePipeline_policyDocument" {
     ]
   }
 
-  # statement {
-  #   effect    = "Allow"
-  #   actions   = ["codestar-connections:UseConnection"]
-  #   resources = [aws_codestarconnections_connection.example.arn]
-  # }
+  statement {
+    effect    = "Allow"
+    actions   = ["s3:ListAllMyBuckets"]
+    resources = ["*"]
+  }
 
   statement {
     effect = "Allow"
@@ -72,6 +72,11 @@ resource "aws_iam_policy" "r_codePileline_policy" {
 }
 
 resource "aws_iam_role_policy_attachment" "r_codePipelineRole_attachment" {
+  role   = aws_iam_role.r_codePipeline_role.id
+  policy_arn = "arn:aws:iam::aws:policy/AWSCodePipeline_FullAccess"
+}
+
+resource "aws_iam_role_policy_attachment" "r_codePipelineRole_attachment2" {
   role   = aws_iam_role.r_codePipeline_role.id
   policy_arn = aws_iam_policy.r_codePileline_policy.arn
 }
