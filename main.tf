@@ -19,5 +19,20 @@ module "m_ec2" {
     ssh_key = var.v_ssh_key_pair
     public_ip = var.v_associate_public_ip
     public_subnets = module.m_vpc.o_public_subnet_ids
+    region = var.v_default_region
 }
 
+module "m_codeDeploy" {
+    source = "./code_deploy"
+    default_tags = var.v_default_tags
+}
+
+module "m_codePipeline" {
+    source = "./code_pipeline"
+    default_tags = var.v_default_tags
+    source_bucket = module.m_s3.o_s3_source_bucket
+    code_deploy_app = module.m_codeDeploy.o_codeDeployApplication
+    code_deploy_group = module.m_codeDeploy.o_codeDeployGroup
+}
+
+    
