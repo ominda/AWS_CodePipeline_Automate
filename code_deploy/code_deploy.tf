@@ -3,9 +3,9 @@ resource "aws_codedeploy_app" "r_codeDeployApplication" {
   name             = local.base_name
 }
 
-resource "aws_codedeploy_deployment_group" "r_codeDeploymentGroup" {
+resource "aws_codedeploy_deployment_group" "r_codeDeploymentGroup_staging" {
   app_name              = aws_codedeploy_app.r_codeDeployApplication.name
-  deployment_group_name = local.base_name
+  deployment_group_name = local.stagingDeploymentGroup_name
   service_role_arn      = aws_iam_role.r_codeDeploy_role.arn
 
   ec2_tag_set {
@@ -20,6 +20,7 @@ resource "aws_codedeploy_deployment_group" "r_codeDeploymentGroup" {
       type  = "KEY_AND_VALUE"
       value = "${local.base_name}-Bastionhost-02"
     }
+
   }
 
   ## Load Balancer configuration
@@ -45,5 +46,32 @@ resource "aws_codedeploy_deployment_group" "r_codeDeploymentGroup" {
 #   }
 
   outdated_instances_strategy = "UPDATE"
+}
 
+resource "aws_codedeploy_deployment_group" "r_codeDeploymentGroup_production" {
+  app_name              = aws_codedeploy_app.r_codeDeployApplication.name
+  deployment_group_name = local.productionDeploymentGroup_name
+  service_role_arn      = aws_iam_role.r_codeDeploy_role.arn
+
+  ec2_tag_set {
+
+    ec2_tag_filter {
+      key   = "Name"
+      type  = "KEY_AND_VALUE"
+      value = "${local.base_name}-Bastionhost-01"
+    }
+
+    ec2_tag_filter {
+      key   = "Name"
+      type  = "KEY_AND_VALUE"
+      value = "${local.base_name}-Bastionhost-02"
+    }
+  }
+
+  auto_rollback_configuration {
+    enabled = true
+    events  = ["DEPLOYMENT_FAILURE"]
+  }
+
+  outdated_instances_strategy = "UPDATE"
 }

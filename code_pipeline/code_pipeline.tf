@@ -27,7 +27,7 @@ resource "aws_codepipeline" "r_codePipeline" {
   }
 
   stage {
-    name = "Deploy"
+    name = "DeployStaging"
 
     action {
       name            = "Deploy"
@@ -39,9 +39,28 @@ resource "aws_codepipeline" "r_codePipeline" {
 
       configuration = {
         ApplicationName = var.code_deploy_app
-        DeploymentGroupName = var.code_deploy_group
+        DeploymentGroupName = var.code_deploy_group_staging
       }
     }
   }
+
+  # stage {
+  #   name = "DeployProduction"
+
+  #   action {
+  #     name            = "DeployProduction"
+  #     category        = "Deploy"
+  #     owner           = "AWS"
+  #     provider        = "CodeDeploy"
+  #     input_artifacts = ["source_output"]
+  #     version         = "1"
+
+  #     configuration = {
+  #       ApplicationName = var.code_deploy_app
+  #       DeploymentGroupName = var.code_deploy_group_production
+  #     }
+  #   }
+  # }
+
 }
 

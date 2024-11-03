@@ -32,7 +32,8 @@ module "m_codePipeline" {
     default_tags = var.v_default_tags
     source_bucket = module.m_s3.o_s3_source_bucket
     code_deploy_app = module.m_codeDeploy.o_codeDeployApplication
-    code_deploy_group = module.m_codeDeploy.o_codeDeployGroup
+    code_deploy_group_staging = module.m_codeDeploy.o_codeDeployGroup_staging
+    code_deploy_group_production = module.m_codeDeploy.o_codeDeployGroup_production
 }
 
     
