@@ -12,13 +12,13 @@ resource "aws_codedeploy_deployment_group" "r_codeDeploymentGroup_staging" {
     ec2_tag_filter {
       key   = "Name"
       type  = "KEY_AND_VALUE"
-      value = "${local.base_name}-Bastionhost-01"
+      value = "${local.base_name}-Staging-01"
     }
 
     ec2_tag_filter {
       key   = "Name"
       type  = "KEY_AND_VALUE"
-      value = "${local.base_name}-Bastionhost-02"
+      value = "${local.base_name}-Staging-02"
     }
 
   }
@@ -58,13 +58,13 @@ resource "aws_codedeploy_deployment_group" "r_codeDeploymentGroup_production" {
     ec2_tag_filter {
       key   = "Name"
       type  = "KEY_AND_VALUE"
-      value = "${local.base_name}-Bastionhost-01"
+      value = "${local.base_name}-Production-01"
     }
 
     ec2_tag_filter {
       key   = "Name"
       type  = "KEY_AND_VALUE"
-      value = "${local.base_name}-Bastionhost-02"
+      value = "${local.base_name}-Production-02"
     }
   }
 

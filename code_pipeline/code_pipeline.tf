@@ -44,23 +44,35 @@ resource "aws_codepipeline" "r_codePipeline" {
     }
   }
 
-  # stage {
-  #   name = "DeployProduction"
+  stage {
+    name = "Approve"
 
-  #   action {
-  #     name            = "DeployProduction"
-  #     category        = "Deploy"
-  #     owner           = "AWS"
-  #     provider        = "CodeDeploy"
-  #     input_artifacts = ["source_output"]
-  #     version         = "1"
+    action {
+      name = "Approval"
+      category = "Approval"
+      owner = "AWS"
+      provider = "Manual"
+      version = "1"
+    }
+  }
 
-  #     configuration = {
-  #       ApplicationName = var.code_deploy_app
-  #       DeploymentGroupName = var.code_deploy_group_production
-  #     }
-  #   }
-  # }
+  stage {
+    name = "DeployProduction"
+
+    action {
+      name            = "DeployProduction"
+      category        = "Deploy"
+      owner           = "AWS"
+      provider        = "CodeDeploy"
+      input_artifacts = ["source_output"]
+      version         = "1"
+
+      configuration = {
+        ApplicationName = var.code_deploy_app
+        DeploymentGroupName = var.code_deploy_group_production
+      }
+    }
+  }
 
 }
 

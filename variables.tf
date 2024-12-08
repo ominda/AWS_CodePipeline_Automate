@@ -17,8 +17,12 @@ variable "v_subnets" {
   type = map(list(string))
 }
 
-variable "v_public_ec2_count" {
+variable "v_staging_ec2_count" {
     type = number  
+}
+
+variable "v_production_ec2_count" {
+  type = number 
 }
 
 variable "v_ssh_key_pair" {

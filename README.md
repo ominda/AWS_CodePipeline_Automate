@@ -7,7 +7,7 @@ IaC AWS Code Pipeline
 - Download sample code from https://docs.aws.amazon.com/codepipeline/latest/userguide/samples/SampleApp_Linux.zip
 - Upload the code to the source S3 bucket 
     - It should trigger the CodePipeline and deploy the code to the EC2 servers
-- Grab a public IP of a server and past it into address bar, this should show a sample message.
+- Grab a public IP of a server and past it into address bar. Only http is working, this should show a sample message.
 
 #### Create a VPC Module
 1. Create a VPC with "10.0.0.0/16" CIDR
