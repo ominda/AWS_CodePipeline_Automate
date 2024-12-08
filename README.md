@@ -7,7 +7,8 @@ IaC AWS Code Pipeline
 - Download sample code from https://docs.aws.amazon.com/codepipeline/latest/userguide/samples/SampleApp_Linux.zip
 - Upload the code to the source S3 bucket 
     - It should trigger the CodePipeline and deploy the code to the EC2 servers
-- Grab a public IP of a server and past it into address bar. Only http is working, this should show a sample message.
+- Grab a public IP of a server and past it into address bar. Only **http** is working, this should show a sample message.
+- As this Pipeline has Staging and Production stages, Untill you provide the approval CodePipeline will not deploy the code to production environment. 
 
 #### Create a VPC Module
 1. Create a VPC with "10.0.0.0/16" CIDR
@@ -28,11 +29,14 @@ IaC AWS Code Pipeline
 1. Create a CodeDeploy
     - Create IAM policy and role
     - Create CodeDeploy Application
-    - Create CodeDeployment Group
+    - Create CodeDeployment Group for Staging
+    - Create CodeDeployment Group for Production
 
 2. Create CodePipeline
     - Create IAM policy and role
         - ***Broder permission granted on S3. need to restrict the permission***
     - Create Source Stage
         - ***Need to update the code to trigger by CloudWatch event***
-    - Create Deploy Stage
+    - Create Staging Deploy Stage
+    - Create Approval Stage
+    - Create Production Deploy Stage
